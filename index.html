@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="numberSystem">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title translate="yes">Zahlensysteme</title>
+    <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" 
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1 class="diagram-title" translate="yes">Zahlensysteme</h1>
+        <img id="logoTH" src="images/th-koeln-logo.png" alt="TH Köln Logo" />
+    </header>
+
+    <div class="container">
+		<div class="col-sm-6 box" ng-controller="countCtrl as count">
+          	<div class="boxTitle">
+            <h2 class="diagram-title">Wähle die gewünschten Zahlensysteme aus:</h2>
+        	</div>
+        	<div class="checks">
+        	<label ng-repeat="check in checkboxes">
+              <input type="checkbox" name="selectedNumbers[]" value="{{check.name}}" ng-model="check.selected"> 
+                {{check.text}}
+            </label>
+                <button ng-click="myChoice()" ng-model="button.choice"> Aufgabe erzeugen </button><br/>
+                {{dummyData}}
+            </div>
+        	<div ng-show="IsClicked">
+         	<hr class="inbox">
+       	    <div id="exercise" ng-model="exercise">
+            {{exercise}}
+            </div>
+            <form>
+            <input type="text" name="solution" ng-keypress="mySolution($event)" ng-model="text.solution" id="solution">
+            &nbsp;
+            <button value="solve" ng-click="mySolution($event)" ng-model="button.solution"> Eingabe prüfen </button>
+            &nbsp;
+            <button ng-click="myChoice()" ng-model="button.new"> Neue Aufgabe </button><br/>
+            <span ng-show="RightAnswer"><img src="images/Right.png">&nbsp;Richtig!</span>
+            <span ng-show="WrongAnswer"><img src="images/Wrong.png">&nbsp;Leider falsch, versuch es nochmal!</span>
+            <button ng-show="Enough" id="help">Hilf mir</button>
+            </form>
+            <div id="dialogue" class="dialogue">
+              <div class="dialogue-content">
+              	<div class="dialogue-header">
+                	<span class="close">&times;</span>
+                    <h3>Lösung (Spoiler Alert!)</h3>
+                </div>
+                <div class="dialogue-body">
+                    <p>Im ersten Schritt sollte die gegebene Zahl ins Dezimalsystem umgerechnet werden.</p>
+                    <p>Bei der gegebenen Zahl entspricht jede Stelle/Ziffer der entsprechenden {{basis}}er-Potenz.</p>
+                    <p>Zur Berechnung lesen wir die Zahl von rechts, da die hinterste Stelle die Potenz {{basis}}<sup>0</sup> = 1 hat.</p>
+                    <p>Mit dem Wissen kannst du nun jede Ziffer mit der passenden Potenz multiplizieren.</p>
+                    <p>Am Ende werden dann alle Werte miteinander addiert.</p>
+                    <p>Das könnte zum Beispiel folgendermaßen aussehen:</p>
+                    <p ng-bind-html="help"></p>
+                    <p> Summe: {{Summe}} </p>
+                    <br>
+                    <p>Im nächsten Schritt wandeln wir die Zahl {{Summe}} in das {{zielbasis}}er-System um.</p>
+                    <p>Dazu eignet sich das Teilen mit Rest durch {{zielbasis}}.</p>
+                    <p>Der daraus entstehende Rest ergibt eine Ziffer der gesuchten Zahl.</p>
+                    <p>Diese Ziffern werden solange berechnet bis der Quotient = 0 ist </p>
+                    <p>Anschließend werden alle Ziffern von rechts nach links aufgeschrieben und fertig ist die Umwandlung<p>
+                    <p>Das könnte zum Beispiel so aussehen:</p>
+                    <p ng-bind-html="solution"></p>
+                    <p>Lösung: {{loesung}}</p>
+                </div>
+                <div class="dialogue-footer">
+                <h5> (c) 2018, Christopher Hollstein, Florian Martens, Julian Kiesler </h5>
+                </div>
+              </div>
+            </div>        
+            </div>
+     	</div>
+        <div class="col-sm-6 box">
+        	<div class="boxTitle">
+            <h2 class="diagram-title">Übungsaufgaben<h2>
+            </div>
+            <hr class="inbox">
+            <span class="description"> Um die Übung zu starten müssen mindestens zwei Zahlensysteme ausgewählt sein </span>
+            <hr class="inbox">
+        </div>
+        <div class="box">
+        	<div class="boxTitle">
+            <h2 class="diagram-title">Spiele-Ecke<h2>
+            </div>
+            <hr class="inbox">
+            <div class="wrapper">
+                <a href="binary_bubble.html"><button class="button">Ich möchte Binary Bubbles spielen</button></a> &nbsp; <a href="binary_puzzle.html"><button class="button">Ich möchte Binary Puzzle spielen</button></a>
+            </div>
+            <hr class="inbox">
+        </div>
+    </div>
+ 
+    <!-- third party js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.2/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+ 
+    <!-- Application scripts -->
+    <script src="js/dialogue.js"></script>
+ 	<script src="js/controllers/list.js"></script>
+    <script src="js/bower/angular-sanitize.js"></script>
+ 
+</body>
+</html>
